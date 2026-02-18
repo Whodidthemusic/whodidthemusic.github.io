@@ -7,145 +7,187 @@
 
 <style>
 
-html {
-scroll-behavior: smooth;
+:root{
+--bg:#000204;
+--blue:#6bd4ff;
+--blue2:#2fb3ff;
+--amber:#ffb347;
 }
 
-body {
-margin: 0;
-background: #010409; /* near black */
-color: #6bd4ff;
-font-family: "Courier New", monospace;
-text-align: center;
-overflow-x: hidden;
+html{scroll-behavior:smooth;}
+
+body{
+margin:0;
+background:#000204;
+color:var(--blue);
+font-family:"Courier New",monospace;
+text-align:center;
+overflow-x:hidden;
 }
 
-/* CRT Scanlines */
-body::after {
-content: "";
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: repeating-linear-gradient(
+/* CRT scanlines */
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:repeating-linear-gradient(
 to bottom,
 rgba(255,255,255,0.02),
 rgba(255,255,255,0.02) 1px,
 transparent 1px,
 transparent 3px
 );
-pointer-events: none;
+pointer-events:none;
 }
 
-/* Subtle Flicker */
-@keyframes flicker {
-0% { opacity: 1; }
-2% { opacity: 0.98; }
-4% { opacity: 1; }
-50% { opacity: 0.99; }
-100% { opacity: 1; }
+/* Boot screen */
+#boot{
+position:fixed;
+inset:0;
+background:#000204;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
 }
 
-.container {
-padding: 80px 20px;
-animation: flicker 6s infinite;
+.bootText{
+color:var(--blue);
+font-size:14px;
+white-space:pre-line;
+text-align:left;
+max-width:700px;
+line-height:1.6;
 }
 
-/* Logo */
-.logo {
-margin-bottom: 30px;
+.cursor{
+display:inline-block;
+width:8px;
+height:14px;
+background:var(--blue);
+margin-left:5px;
+animation:blink .8s infinite;
 }
 
-/* Glow Filter */
-svg {
-filter: drop-shadow(0 0 8px #3fbfff)
-        drop-shadow(0 0 20px #2fb3ff);
+@keyframes blink{
+50%{opacity:0;}
+}
+
+/* App */
+#app{display:none;}
+
+.container{
+padding:80px 20px;
+}
+
+/* Logo glow */
+.logoWrap{
+width:220px;
+margin:0 auto 20px;
+position:relative;
+}
+
+.logoWrap img{
+width:100%;
+display:block;
+}
+
+.logoGlow{
+position:absolute;
+inset:0;
+opacity:.7;
+mix-blend-mode:screen;
+filter:
+brightness(1.6)
+drop-shadow(0 0 12px var(--blue2))
+drop-shadow(0 0 40px var(--blue2));
 }
 
 /* Title */
-h1 {
-font-size: 42px;
-letter-spacing: 6px;
-margin: 10px 0 10px 0;
-text-shadow: 0 0 10px #3fbfff, 0 0 20px #2fb3ff;
+h1{
+font-size:42px;
+letter-spacing:6px;
+margin:10px 0;
+text-shadow:0 0 10px var(--blue2),0 0 20px var(--blue2);
 }
 
-.subtitle {
-font-size: 14px;
-letter-spacing: 4px;
-opacity: 0.7;
-margin-bottom: 40px;
+.subtitle{
+font-size:14px;
+letter-spacing:4px;
+opacity:.7;
+margin-bottom:40px;
 }
 
 /* Nav */
-nav a {
-display: inline-block;
-margin: 10px 18px;
-color: #6bd4ff;
-text-decoration: none;
-font-size: 18px;
-transition: 0.3s;
+nav a{
+display:inline-block;
+margin:10px 15px;
+color:var(--blue);
+text-decoration:none;
+font-size:18px;
+transition:.3s;
 }
 
-nav a:hover {
-color: #ffb347;
-text-shadow: 0 0 8px #ffb347;
+nav a:hover{
+color:var(--amber);
+text-shadow:0 0 8px var(--amber);
 }
 
 /* Sections */
-section {
-padding: 100px 20px;
-border-top: 1px solid rgba(107,212,255,0.15);
+section{
+padding:100px 20px;
+border-top:1px solid rgba(107,212,255,.15);
 }
 
-h2 {
-letter-spacing: 3px;
-margin-bottom: 20px;
-text-shadow: 0 0 8px #3fbfff;
+h2{
+letter-spacing:3px;
+margin-bottom:20px;
 }
 
-p {
-max-width: 700px;
-margin: 0 auto 20px auto;
-line-height: 1.6;
-font-size: 16px;
-opacity: 0.9;
+p{
+max-width:700px;
+margin:0 auto 20px auto;
+line-height:1.6;
 }
 
-.button {
-display: inline-block;
-margin-top: 15px;
-padding: 10px 20px;
-border: 1px solid #6bd4ff;
-color: #6bd4ff;
-text-decoration: none;
-transition: 0.3s;
+.button{
+display:inline-block;
+margin-top:15px;
+padding:10px 20px;
+border:1px solid var(--blue);
+color:var(--blue);
+text-decoration:none;
+transition:.3s;
 }
 
-.button:hover {
-border-color: #ffb347;
-color: #ffb347;
-box-shadow: 0 0 10px #ffb347;
+.button:hover{
+border-color:var(--amber);
+color:var(--amber);
+box-shadow:0 0 10px var(--amber);
 }
 
 </style>
 </head>
+
 <body>
+
+<!-- Boot Screen -->
+<div id="boot">
+<div class="bootText" id="bootText"></div>
+</div>
+
+<!-- Main App -->
+<div id="app">
 
 <div class="container">
 
-<!-- EGOCORP VECTOR LOGO -->
-<svg class="logo" width="220" height="240" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg">
-
-  <polygon points="110,20 190,70 110,120 30,70" fill="#6bd4ff"/>
-  <polygon points="110,55 150,75 110,95 70,75" fill="#010409"/>
-
-  <polygon points="45,130 175,130 145,160 75,160" fill="#6bd4ff"/>
-  <polygon points="40,165 180,165 145,195 75,195" fill="#6bd4ff"/>
-  <polygon points="35,200 185,200 145,230 75,230" fill="#6bd4ff"/>
-
-</svg>
+<div class="logoWrap">
+<img src="egocorp-logo.png" alt="Egocorp Logo">
+<img src="egocorp-logo.png" class="logoGlow" alt="">
+</div>
 
 <h1>EGOCORP™</h1>
 <div class="subtitle">MEDIA & SOCIAL ARCHITECTURE</div>
@@ -163,51 +205,84 @@ box-shadow: 0 0 10px #ffb347;
 <section id="about">
 <h2>ABOUT</h2>
 <p>
-Egocorp™ is a multidisciplinary systems entity operating at the intersection of entertainment, narrative engineering, and influence architecture.
-</p>
-<p>
-We design culture. We simulate futures. We build scalable social frameworks.
+Egocorp™ operates at the intersection of entertainment, narrative architecture, and engineered culture systems.
 </p>
 </section>
 
 <section id="projects">
 <h2>PROJECTS</h2>
 <p>
-• Project Virtu  
-• Virtu City Development  
-• Influence Exchange Systems  
-• Narrative Infrastructure  
+• Project Virtu<br>
+• Virtu City<br>
+• Influence Infrastructure<br>
+• Immersive Media Platforms
 </p>
 </section>
 
 <section id="vision">
 <h2>VISION</h2>
 <p>
-Virtu City is a prototype for the future of digital civilization.
-</p>
-<p>
-Where media, identity, currency, and influence merge into a unified social architecture.
+Virtu City is a prototype for the next era of digital civilization.
+Where media, identity, and influence merge.
 </p>
 </section>
 
 <section id="famefarm">
 <h2>READ FAME FARM</h2>
-<p>
-The foundational narrative exploring Virtu City and the evolution of the Influence Economy.
-</p>
-
-<a class="button" href="https://books.apple.com" target="_blank">
-Buy Digital Copy
+<a class="button" href="https://books.apple.com/us/book/fame-farm/id6743888201" target="_blank">
+Apple Books
 </a>
-
 </section>
 
 <section id="terminal">
 <h2>ACCESS TERMINAL</h2>
-<p>
-Employee authentication module coming online.
-</p>
+<p>Employee authentication module initializing.</p>
 </section>
+
+</div>
+
+<script>
+
+/* Boot Animation */
+const lines = [
+"EGOCORP BIOS v3.1.9",
+"Initializing Media & Social Architecture...",
+"Loading Virtu City Systems...",
+"Calibrating Phosphor Display...",
+"System Ready."
+];
+
+const bootText = document.getElementById("bootText");
+let i = 0;
+
+function typeLine(){
+if(i >= lines.length){
+setTimeout(()=>{
+document.getElementById("boot").style.display="none";
+document.getElementById("app").style.display="block";
+},600);
+return;
+}
+
+let line = lines[i];
+let j = 0;
+
+const interval = setInterval(()=>{
+bootText.innerHTML += line[j] || "";
+j++;
+
+if(j > line.length){
+clearInterval(interval);
+bootText.innerHTML += "<br>";
+i++;
+setTimeout(typeLine,200);
+}
+},20);
+}
+
+typeLine();
+
+</script>
 
 </body>
 </html>
