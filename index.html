@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGOCORP™ — Media & Cultural Systems</title>
+
+<style>
+:root{
+  --bg:#02060f;
+  --blue:#6bd4ff;
+  --blueGlow:#2fb3ff;
+  --amber:#ffb347;
+}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% 20%, #0a1e38 0%, #02060f 70%);
+  color:var(--blue);
+  font-family: monospace;
+  letter-spacing:.5px;
+  overflow-x:hidden;
+}
+
+/* CRT scanlines */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,.25) 3px
+  );
+  pointer-events:none;
+  opacity:.6;
+}
+
+.wrapper{
+  max-width:900px;
+  margin:auto;
+  padding:30px 20px;
+}
+
+h1{
+  font-size:32px;
+  text-shadow:0 0 15px var(--blueGlow);
+  margin:0;
+}
+
+.subtitle{
+  opacity:.7;
+  margin-bottom:30px;
+}
+
+.section{
+  margin-bottom:35px;
+}
+
+.section h2{
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  opacity:.8;
+  margin-bottom:10px;
+}
+
+a.button{
+  display:inline-block;
+  margin:10px 10px 0 0;
+  padding:8px 14px;
+  border:1px solid var(--amber);
+  color:var(--amber);
+  text-decoration:none;
+  text-transform:uppercase;
+  font-size:12px;
+  letter-spacing:1px;
+  transition:.2s;
+}
+
+a.button:hover{
+  background:var(--amber);
+  color:black;
+  box-shadow:0 0 12px var(--amber);
+}
+
+.footer{
+  margin-top:50px;
+  font-size:12px;
+  opacity:.6;
+  border-top:1px solid rgba(107,212,255,.2);
+  padding-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<h1>EGOCORP™</h1>
+<div class="subtitle">Media & Cultural Systems</div>
+
+<div class="section">
+<h2>Overview</h2>
+<p>
+Egocorp is a media and cultural development entity providing entertainment and educational services through immersive storytelling, digital publications, and interactive narrative environments.
+</p>
+
+<a href="#" class="button">Explore Projects</a>
+<a href="/terminal" class="button">Access Interface</a>
+<a href="#" class="button">Read Fame Farm</a>
+</div>
+
+<div class="section">
+<h2>Entertainment & Educational Services</h2>
+<p>
+Services include literary works, multimedia narrative development, online entertainment experiences, and interactive digital storytelling platforms delivered through web-based environments and published media.
+</p>
+</div>
+
+<div class="section">
+<h2>Featured Narrative Experience</h2>
+<p>
+<strong>Fame Farm</strong> — A dystopian narrative examining artificial intelligence, influence economics, and digital culture.
+</p>
+</div>
+
+<div class="footer">
+© 2026 Egocorp Media & Cultural Systems
+</div>
+
+</div>
+
+</body>
+</html>
