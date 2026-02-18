@@ -3,158 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Egocorp™ — Media & Cultural Systems</title>
+<title>Egocorp™</title>
 
 <style>
 
-html { scroll-behavior:smooth; }
-
-body{
-margin:0;
-background:#02060f;
-color:#6bd4ff;
-font-family:"Courier New", monospace;
-overflow-x:hidden;
-text-align:center;
+html {
+scroll-behavior: smooth;
 }
 
-/* CRT scanlines */
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:repeating-linear-gradient(
+body {
+margin: 0;
+background: #010409; /* near black */
+color: #6bd4ff;
+font-family: "Courier New", monospace;
+text-align: center;
+overflow-x: hidden;
+}
+
+/* CRT Scanlines */
+body::after {
+content: "";
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: repeating-linear-gradient(
 to bottom,
-rgba(255,255,255,0.02) 0px,
+rgba(255,255,255,0.02),
 rgba(255,255,255,0.02) 1px,
 transparent 1px,
 transparent 3px
 );
-pointer-events:none;
+pointer-events: none;
 }
 
-/* subtle flicker */
-@keyframes flicker{
-0%,100%{opacity:1;}
-49%{opacity:.96;}
-50%{opacity:1;}
+/* Subtle Flicker */
+@keyframes flicker {
+0% { opacity: 1; }
+2% { opacity: 0.98; }
+4% { opacity: 1; }
+50% { opacity: 0.99; }
+100% { opacity: 1; }
 }
 
-.wrapper{
-padding:70px 20px;
-animation:flicker 6s infinite;
+.container {
+padding: 80px 20px;
+animation: flicker 6s infinite;
 }
 
-/* LOGO */
-.logo{
-width:190px;
-margin:0 auto 25px auto;
-filter:
-drop-shadow(0 0 12px #3fbfff)
-drop-shadow(0 0 28px #2fb3ff)
-drop-shadow(0 0 55px rgba(47,179,255,.25));
+/* Logo */
+.logo {
+margin-bottom: 30px;
 }
 
-/* title */
-h1{
-font-size:42px;
-letter-spacing:6px;
-margin:0;
-text-shadow:
-0 0 8px #3fbfff,
-0 0 18px #2fb3ff;
+/* Glow Filter */
+svg {
+filter: drop-shadow(0 0 8px #3fbfff)
+        drop-shadow(0 0 20px #2fb3ff);
 }
 
-/* subtitle */
-.subtitle{
-margin-top:10px;
-font-size:14px;
-letter-spacing:2px;
-opacity:.75;
+/* Title */
+h1 {
+font-size: 42px;
+letter-spacing: 6px;
+margin: 10px 0 10px 0;
+text-shadow: 0 0 10px #3fbfff, 0 0 20px #2fb3ff;
 }
 
-/* nav */
-nav{
-margin-top:35px;
+.subtitle {
+font-size: 14px;
+letter-spacing: 4px;
+opacity: 0.7;
+margin-bottom: 40px;
 }
 
-nav a{
-display:inline-block;
-margin:10px 18px;
-text-decoration:none;
-color:#6bd4ff;
-transition:.3s;
-font-size:18px;
+/* Nav */
+nav a {
+display: inline-block;
+margin: 10px 18px;
+color: #6bd4ff;
+text-decoration: none;
+font-size: 18px;
+transition: 0.3s;
 }
 
-nav a:hover{
-color:#ffb347;
-text-shadow:0 0 10px #ffb347;
+nav a:hover {
+color: #ffb347;
+text-shadow: 0 0 8px #ffb347;
 }
 
-/* sections */
-section{
-padding:90px 20px;
-border-top:1px solid rgba(107,212,255,.2);
+/* Sections */
+section {
+padding: 100px 20px;
+border-top: 1px solid rgba(107,212,255,0.15);
 }
 
-h2{
-letter-spacing:3px;
-margin-bottom:25px;
-text-shadow:0 0 10px #2fb3ff;
+h2 {
+letter-spacing: 3px;
+margin-bottom: 20px;
+text-shadow: 0 0 8px #3fbfff;
 }
 
-p{
-max-width:720px;
-margin:0 auto 20px auto;
-line-height:1.6;
-font-size:16px;
+p {
+max-width: 700px;
+margin: 0 auto 20px auto;
+line-height: 1.6;
+font-size: 16px;
+opacity: 0.9;
 }
 
-.button{
-display:inline-block;
-margin-top:15px;
-padding:10px 24px;
-border:1px solid #6bd4ff;
-color:#6bd4ff;
-text-decoration:none;
-transition:.3s;
+.button {
+display: inline-block;
+margin-top: 15px;
+padding: 10px 20px;
+border: 1px solid #6bd4ff;
+color: #6bd4ff;
+text-decoration: none;
+transition: 0.3s;
 }
 
-.button:hover{
-border-color:#ffb347;
-color:#ffb347;
-box-shadow:0 0 12px #ffb347;
+.button:hover {
+border-color: #ffb347;
+color: #ffb347;
+box-shadow: 0 0 10px #ffb347;
 }
 
 </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
 
-<!-- TRUE EGOCORP LOGO RECREATION -->
-<svg class="logo" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg">
+<!-- EGOCORP VECTOR LOGO -->
+<svg class="logo" width="220" height="240" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg">
 
-<!-- top diamond -->
-<polygon fill="#6bd4ff" points="110,20 190,60 110,105 30,60"/>
+  <polygon points="110,20 190,70 110,120 30,70" fill="#6bd4ff"/>
+  <polygon points="110,55 150,75 110,95 70,75" fill="#010409"/>
 
-<!-- inner cut -->
-<polygon fill="#02060f" points="110,50 150,70 110,90 70,70"/>
-
-<!-- stacked base 1 -->
-<polygon fill="#6bd4ff" points="40,120 180,120 150,150 70,150"/>
-
-<!-- stacked base 2 -->
-<polygon fill="#6bd4ff" points="35,160 185,160 150,190 70,190"/>
-
-<!-- stacked base 3 -->
-<polygon fill="#6bd4ff" points="30,200 190,200 150,230 70,230"/>
+  <polygon points="45,130 175,130 145,160 75,160" fill="#6bd4ff"/>
+  <polygon points="40,165 180,165 145,195 75,195" fill="#6bd4ff"/>
+  <polygon points="35,200 185,200 145,230 75,230" fill="#6bd4ff"/>
 
 </svg>
 
 <h1>EGOCORP™</h1>
-<div class="subtitle">Media & Cultural Systems</div>
+<div class="subtitle">MEDIA & SOCIAL ARCHITECTURE</div>
 
 <nav>
 <a href="#about">About</a>
@@ -169,10 +163,10 @@ box-shadow:0 0 12px #ffb347;
 <section id="about">
 <h2>ABOUT</h2>
 <p>
-Egocorp is a media and cultural systems entity operating at the intersection of entertainment, narrative architecture, and behavioral design.
+Egocorp™ is a multidisciplinary systems entity operating at the intersection of entertainment, narrative engineering, and influence architecture.
 </p>
 <p>
-We design environments. We prototype futures. We engineer culture.
+We design culture. We simulate futures. We build scalable social frameworks.
 </p>
 </section>
 
@@ -180,35 +174,38 @@ We design environments. We prototype futures. We engineer culture.
 <h2>PROJECTS</h2>
 <p>
 • Project Virtu  
-• Simulacracy Narrative Systems  
-• Influence Infrastructure  
-• Immersive Media Platforms  
+• Virtu City Development  
+• Influence Exchange Systems  
+• Narrative Infrastructure  
 </p>
 </section>
 
 <section id="vision">
 <h2>VISION</h2>
 <p>
-Virtu City is the prototype — a living social ecosystem exploring the future of digital governance, engineered community design, and influence economics.
+Virtu City is a prototype for the future of digital civilization.
 </p>
 <p>
-The future of media is immersive.  
-The future of power is narrative.
+Where media, identity, currency, and influence merge into a unified social architecture.
 </p>
 </section>
 
 <section id="famefarm">
 <h2>READ FAME FARM</h2>
 <p>
-The foundational narrative exploring Virtu City and the rise of the Influence Economy.
+The foundational narrative exploring Virtu City and the evolution of the Influence Economy.
 </p>
-<a class="button" href="https://books.apple.com/us/book/fame-farm/id6743888201" target="_blank">Buy Digital Copy</a>
+
+<a class="button" href="https://books.apple.com" target="_blank">
+Buy Digital Copy
+</a>
+
 </section>
 
 <section id="terminal">
 <h2>ACCESS TERMINAL</h2>
 <p>
-Employee authentication layer coming online.
+Employee authentication module coming online.
 </p>
 </section>
 
