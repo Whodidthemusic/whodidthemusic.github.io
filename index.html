@@ -1,178 +1,469 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Egocorp™ | Media & Social Architecture</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EGOCORP™ | Media & Social Architecture</title>
 
-<style>
+  <style>
+    :root{
+      --bg:#020405;
+      --panel:#05090b;
+      --line:rgba(120,200,255,.18);
+      --blue:#86d6ff;
+      --blue2:#35b6ff;
+      --amber:#ffb347;
+      --muted:rgba(134,214,255,.65);
+    }
 
-/* ===== BASE ===== */
-body {
-    margin: 0;
-    background: #050607;
-    color: #8fd8ff;
-    font-family: "Courier New", monospace;
-    text-align: center;
-    overflow-x: hidden;
-}
+    html{ scroll-behavior:smooth; }
 
-/* ===== CRT EFFECT ===== */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--blue);
+      font-family:"Courier New", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x:hidden;
+    }
+
+    /* CRT scanlines */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,0.03) 0px,
-        rgba(255,255,255,0.03) 1px,
+        rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 1px,
         transparent 1px,
         transparent 3px
-    );
-    pointer-events: none;
-}
+      );
+      pointer-events:none;
+      mix-blend-mode:overlay;
+      opacity:.55;
+      z-index:50;
+    }
 
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center,
-        transparent 40%,
-        rgba(0,0,0,0.7) 100%);
-    pointer-events: none;
-}
+    /* vignette */
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      background:radial-gradient(circle at 50% 35%,
+        transparent 0%,
+        rgba(0,0,0,.35) 55%,
+        rgba(0,0,0,.90) 100%);
+      pointer-events:none;
+      z-index:60;
+    }
 
-/* ===== BOOT SCREEN ===== */
-#boot {
-    position: fixed;
-    inset: 0;
-    background: #050607;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 9999;
-    animation: bootFade 3.5s forwards;
-}
+    /* Subtle screen wobble */
+    @keyframes wobble {
+      0%,100% { transform:translate3d(0,0,0); }
+      50%     { transform:translate3d(.35px, -.2px, 0); }
+    }
+    .screen{ animation:wobble 6s ease-in-out infinite; }
 
-.boot-text {
-    font-size: 14px;
-    letter-spacing: 2px;
-    opacity: 0;
-    animation: type 2.5s forwards;
-}
+    /* Boot overlay */
+    #boot{
+      position:fixed; inset:0;
+      background:var(--bg);
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .bootPanel{
+      width:min(980px, 94vw);
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.35);
+      box-shadow:0 0 30px rgba(53,182,255,.10);
+      padding:16px;
+    }
+    .bootHeader{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding-bottom:10px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:12px;
+      font-size:12px;
+      letter-spacing:2px;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+    .bootBody{
+      min-height:260px;
+      max-height:62vh;
+      overflow:hidden;
+      position:relative;
+    }
+    #log{
+      white-space:pre-wrap;
+      font-size:13px;
+      line-height:1.55;
+      text-shadow:0 0 12px rgba(53,182,255,.10);
+    }
+    .cursor{
+      display:inline-block;
+      width:10px; height:14px;
+      background:var(--blue2);
+      margin-left:6px;
+      animation:blink .85s steps(1,end) infinite;
+      vertical-align:-2px;
+    }
+    @keyframes blink{ 50%{opacity:0} }
 
-@keyframes type {
-    to { opacity: 1; }
-}
+    .progressWrap{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      overflow:hidden;
+      height:12px;
+      background:rgba(0,0,0,.25);
+    }
+    .progressBar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(53,182,255,.20), rgba(53,182,255,.90));
+      box-shadow:0 0 22px rgba(53,182,255,.35);
+      transition:width .25s ease;
+    }
 
-@keyframes bootFade {
-    0% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; visibility: hidden; }
-}
+    /* Main app */
+    #app{ display:none; }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:70px 18px 90px;
+      text-align:center;
+    }
 
-/* ===== MAIN CONTENT ===== */
-.content {
-    opacity: 0;
-    animation: contentReveal 4s forwards;
-}
+    .logoWrap{
+      width:240px;
+      margin:0 auto 18px;
+      position:relative;
+    }
+    .logoWrap img{ width:100%; display:block; }
+    .logoGlow{
+      position:absolute; inset:0;
+      opacity:.78;
+      mix-blend-mode:screen;
+      filter:brightness(1.45)
+              drop-shadow(0 0 10px var(--blue2))
+              drop-shadow(0 0 34px var(--blue2));
+      animation:logoFlicker 3.2s infinite;
+      pointer-events:none;
+    }
+    @keyframes logoFlicker{
+      0%,100%{ opacity:.78; }
+      48%{ opacity:.70; }
+      50%{ opacity:.86; }
+      52%{ opacity:.72; }
+    }
 
-@keyframes contentReveal {
-    0% { opacity: 0; }
-    85% { opacity: 0; }
-    100% { opacity: 1; }
-}
+    /* Title flicker (subtle) */
+    .titleFlicker{
+      animation:titleFlicker 5.5s infinite;
+    }
+    @keyframes titleFlicker{
+      0%, 92%, 100% { opacity:1; }
+      93% { opacity:.85; }
+      94% { opacity:1; }
+      96% { opacity:.88; }
+      97% { opacity:1; }
+    }
 
-/* ===== LOGO ===== */
-.logo-container {
-    margin-top: 80px;
-}
+    h1{
+      margin:10px 0 8px;
+      font-size:44px;
+      letter-spacing:7px;
+      text-shadow:0 0 10px rgba(53,182,255,.35),
+                  0 0 30px rgba(53,182,255,.18);
+    }
+    .sub{
+      margin:0 0 26px;
+      font-size:13px;
+      letter-spacing:4px;
+      color:rgba(134,214,255,.70);
+      text-transform:uppercase;
+    }
 
-.logo {
-    width: 240px;
-    filter:
-        drop-shadow(0 0 8px #4cc9ff)
-        drop-shadow(0 0 25px #4cc9ff)
-        drop-shadow(0 0 50px #4cc9ff);
-    animation: subtleFlicker 4s infinite;
-}
+    .nav{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px 18px;
+      margin:28px 0 10px;
+    }
+    .nav a{
+      color:var(--blue);
+      text-decoration:none;
+      font-size:18px;
+      letter-spacing:1px;
+      padding:8px 12px;
+      border:1px solid rgba(134,214,255,.18);
+      border-radius:10px;
+      background:rgba(0,0,0,.18);
+      transition:.22s ease;
+    }
+    .nav a:hover{
+      color:var(--amber);
+      border-color:rgba(255,179,71,.45);
+      box-shadow:0 0 16px rgba(255,179,71,.18);
+      text-shadow:0 0 10px rgba(255,179,71,.25);
+    }
 
-/* subtle corporate flicker */
-@keyframes subtleFlicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.96; }
-}
+    .section{
+      margin-top:54px;
+      border-top:1px solid rgba(134,214,255,.14);
+      padding-top:44px;
+      text-align:left;
+    }
+    .section h2{
+      margin:0 0 12px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      font-size:18px;
+      color:rgba(134,214,255,.90);
+    }
+    .section p{
+      margin:0 0 16px;
+      line-height:1.65;
+      color:rgba(134,214,255,.72);
+      max-width:780px;
+    }
 
-/* ===== TITLE ===== */
-h1 {
-    font-size: 48px;
-    margin: 25px 0 10px 0;
-    letter-spacing: 8px;
-    text-shadow:
-        0 0 8px #4cc9ff,
-        0 0 25px #4cc9ff;
-}
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pill{
+      border:1px solid rgba(134,214,255,.18);
+      border-radius:999px;
+      padding:8px 12px;
+      background:rgba(0,0,0,.18);
+      color:rgba(134,214,255,.82);
+      font-size:13px;
+      letter-spacing:1px;
+    }
 
-.tagline {
-    letter-spacing: 5px;
-    font-size: 14px;
-    margin-bottom: 40px;
-    opacity: 0.8;
-}
+    .btn{
+      display:inline-block;
+      margin-top:8px;
+      padding:10px 14px;
+      border:1px solid rgba(134,214,255,.28);
+      border-radius:10px;
+      text-decoration:none;
+      color:var(--blue);
+      background:rgba(0,0,0,.18);
+      transition:.22s ease;
+    }
+    .btn:hover{
+      color:var(--amber);
+      border-color:rgba(255,179,71,.55);
+      box-shadow:0 0 18px rgba(255,179,71,.18);
+    }
 
-/* ===== NAV ===== */
-nav a {
-    display: block;
-    margin: 18px 0;
-    color: #8fd8ff;
-    text-decoration: none;
-    font-size: 20px;
-    transition: 0.3s;
-}
+    .footer{
+      margin-top:60px;
+      text-align:center;
+      color:rgba(134,214,255,.45);
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
 
-nav a:hover {
-    text-shadow:
-        0 0 10px #4cc9ff,
-        0 0 20px #4cc9ff;
-}
-
-</style>
+    /* If logo fails, show a nice fallback box instead of the "?" */
+    .imgFallback{
+      width:240px;
+      height:240px;
+      border:1px solid rgba(134,214,255,.18);
+      border-radius:12px;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      color:rgba(134,214,255,.6);
+      background:rgba(0,0,0,.25);
+      margin:0 auto 18px;
+    }
+  </style>
 </head>
 
 <body>
+<div class="screen">
 
-<!-- BOOT SEQUENCE -->
-<div id="boot">
-    <div class="boot-text">
-        INITIALIZING EGOCORE SYSTEM...<br><br>
-        MEDIA & SOCIAL ARCHITECTURE PROTOCOL LOADED.<br><br>
-        WELCOME TO EGO<span style="color:#4cc9ff;">CORP</span>.
+  <!-- BOOT -->
+  <div id="boot">
+    <div class="bootPanel">
+      <div class="bootHeader">
+        <div>EGOCORP BIOS • v3.1.9</div>
+        <div id="bootStatus">LINK: STANDBY</div>
+      </div>
+
+      <div class="bootBody">
+        <div id="log"></div><span class="cursor"></span>
+      </div>
+
+      <div class="progressWrap">
+        <div class="progressBar" id="bar"></div>
+      </div>
     </div>
-</div>
+  </div>
 
-<!-- MAIN SITE -->
-<div class="content">
+  <!-- APP -->
+  <div id="app">
+    <div class="wrap">
 
-    <div class="logo-container">
-        <img src="egocorp-logo.png" alt="Egocorp Logo" class="logo">
-    </div>
+      <div class="imgFallback" id="fallbackBox">EGOCORP LOGO • OFFLINE</div>
 
-    <h1>EGO<span style="color:#4cc9ff;">CORP™</span></h1>
+      <div class="logoWrap" id="logoWrap">
+        <img id="logoImg" src="./42151FE2-841E-4B19-A3F7-CE0314B2D002.png" alt="Egocorp Logo">
+        <img id="logoGlow" src="./42151FE2-841E-4B19-A3F7-CE0314B2D002.png" class="logoGlow" alt="">
+      </div>
 
-    <div class="tagline">
-        MEDIA & SOCIAL ARCHITECTURE
-    </div>
+      <h1 class="titleFlicker">EGOCORP™</h1>
+      <div class="sub">MEDIA & SOCIAL ARCHITECTURE</div>
 
-    <nav>
+      <div class="nav">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#vision">Vision</a>
         <a href="#famefarm">Read Fame Farm</a>
         <a href="#terminal">Access Terminal</a>
-    </nav>
+      </div>
+
+      <div class="section" id="about">
+        <h2>About</h2>
+        <p>
+          Egocorp™ designs entertainment systems that shape culture—story, products, platforms, and
+          participation loops—packaged as delight, operating as infrastructure.
+        </p>
+        <div class="pillRow">
+          <div class="pill">Narrative Engineering</div>
+          <div class="pill">Audience Systems</div>
+          <div class="pill">Brand Rituals</div>
+          <div class="pill">Immersive Media</div>
+        </div>
+      </div>
+
+      <div class="section" id="projects">
+        <h2>Projects</h2>
+        <p>Current initiatives live at the intersection of fiction, product, and platform.</p>
+        <div class="pillRow">
+          <div class="pill">Project Virtu</div>
+          <div class="pill">Virtu City</div>
+          <div class="pill">SMSx Influence Market</div>
+          <div class="pill">Egocorp Terminal</div>
+        </div>
+      </div>
+
+      <div class="section" id="vision">
+        <h2>Vision</h2>
+        <p>
+          Virtu City is a blueprint for the future of social media: a lived platform where identity,
+          influence, and commerce merge into one environment—gamified, measurable, and monetized.
+        </p>
+        <p>The goal: build systems people love to use… while the system learns them.</p>
+      </div>
+
+      <div class="section" id="famefarm">
+        <h2>Read Fame Farm</h2>
+        <p>Fame Farm is the origin file. The myth. The warning label.</p>
+
+        <a class="btn" target="_blank"
+           href="https://books.apple.com/us/book/fame-farm/id6743888201">
+          Buy / Read on Apple Books
+        </a>
+      </div>
+
+      <div class="section" id="terminal">
+        <h2>Access Terminal</h2>
+        <p>
+          Employee authentication module is staged. (Password wall comes next once we decide what’s protected.)
+        </p>
+        <div class="pillRow">
+          <div class="pill">STATUS: ONLINE</div>
+          <div class="pill">CLEARANCE: PENDING</div>
+          <div class="pill">NODE: EGOCORP.IO</div>
+        </div>
+      </div>
+
+      <div class="footer">EGOCORP™ • SYSTEMS INTEGRITY: NOMINAL</div>
+    </div>
+  </div>
 
 </div>
 
+<script>
+  const logEl = document.getElementById("log");
+  const bar = document.getElementById("bar");
+  const statusEl = document.getElementById("bootStatus");
+
+  const lines = [
+    "EGOCORP BIOS v3.1.9",
+    "Initializing Media & Social Architecture...",
+    "Mounting Influence Layer: [OK]",
+    "Loading Virtu City Protocols: [OK]",
+    "Compiling Narrative Engine: [OK]",
+    "Syncing Audience Feedback Loop: [OK]",
+    "Calibrating Phosphor Display: [OK]",
+    "Routing Social Signals: [OK]",
+    "Encrypting Brand Ritual Stack: [OK]",
+    "Finalizing Session...",
+    "",
+    "SYSTEM READY."
+  ];
+
+  let lineIdx = 0;
+
+  function typeLine(text, done){
+    let i = 0;
+    const speed = 12; // typing speed
+    const t = setInterval(() => {
+      logEl.textContent += text[i] || "";
+      i++;
+      if(i > text.length){
+        clearInterval(t);
+        logEl.textContent += "\n";
+        done && done();
+      }
+    }, speed);
+  }
+
+  function runBoot(){
+    if(lineIdx >= lines.length){
+      statusEl.textContent = "LINK: ESTABLISHED";
+      bar.style.width = "100%";
+      setTimeout(() => {
+        document.getElementById("boot").style.display = "none";
+        document.getElementById("app").style.display = "block";
+      }, 450);
+      return;
+    }
+
+    const pct = Math.round((lineIdx / (lines.length-1)) * 100);
+    bar.style.width = Math.min(pct, 98) + "%";
+    if(lineIdx < 2) statusEl.textContent = "LINK: STANDBY";
+    else if(lineIdx < 6) statusEl.textContent = "LINK: NEGOTIATING";
+    else statusEl.textContent = "LINK: AUTHORIZING";
+
+    typeLine(lines[lineIdx], () => {
+      lineIdx++;
+      setTimeout(runBoot, 90);
+    });
+  }
+
+  // Logo fallback if image can’t load (kills the blue ?)
+  const logoImg = document.getElementById("logoImg");
+  logoImg.addEventListener("error", () => {
+    document.getElementById("logoWrap").style.display = "none";
+    document.getElementById("fallbackBox").style.display = "flex";
+  });
+
+  runBoot();
+</script>
 </body>
 </html>
