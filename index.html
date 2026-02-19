@@ -3,170 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Egocorp™</title>
+<title>Egocorp™ | Media & Social Architecture</title>
 
 <style>
 
-:root{
---bg:#000204;
---blue:#6bd4ff;
---blue2:#2fb3ff;
---amber:#ffb347;
+/* ===== BASE ===== */
+body {
+    margin: 0;
+    background: #050607;
+    color: #8fd8ff;
+    font-family: "Courier New", monospace;
+    text-align: center;
+    overflow-x: hidden;
 }
 
-html{scroll-behavior:smooth;}
-
-body{
-margin:0;
-background:#000204;
-color:var(--blue);
-font-family:"Courier New",monospace;
-text-align:center;
-overflow-x:hidden;
+/* ===== CRT EFFECT ===== */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
 }
 
-/* CRT scanlines */
-body::after{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:repeating-linear-gradient(
-to bottom,
-rgba(255,255,255,0.02),
-rgba(255,255,255,0.02) 1px,
-transparent 1px,
-transparent 3px
-);
-pointer-events:none;
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        transparent 40%,
+        rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
 }
 
-/* Boot screen */
-#boot{
-position:fixed;
-inset:0;
-background:#000204;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
+/* ===== BOOT SCREEN ===== */
+#boot {
+    position: fixed;
+    inset: 0;
+    background: #050607;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    animation: bootFade 3.5s forwards;
 }
 
-.bootText{
-color:var(--blue);
-font-size:14px;
-white-space:pre-line;
-text-align:left;
-max-width:700px;
-line-height:1.6;
+.boot-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: type 2.5s forwards;
 }
 
-.cursor{
-display:inline-block;
-width:8px;
-height:14px;
-background:var(--blue);
-margin-left:5px;
-animation:blink .8s infinite;
+@keyframes type {
+    to { opacity: 1; }
 }
 
-@keyframes blink{
-50%{opacity:0;}
+@keyframes bootFade {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
 }
 
-/* App */
-#app{display:none;}
-
-.container{
-padding:80px 20px;
+/* ===== MAIN CONTENT ===== */
+.content {
+    opacity: 0;
+    animation: contentReveal 4s forwards;
 }
 
-/* Logo glow */
-.logoWrap{
-width:220px;
-margin:0 auto 20px;
-position:relative;
+@keyframes contentReveal {
+    0% { opacity: 0; }
+    85% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
-.logoWrap img{
-width:100%;
-display:block;
+/* ===== LOGO ===== */
+.logo-container {
+    margin-top: 80px;
 }
 
-.logoGlow{
-position:absolute;
-inset:0;
-opacity:.7;
-mix-blend-mode:screen;
-filter:
-brightness(1.6)
-drop-shadow(0 0 12px var(--blue2))
-drop-shadow(0 0 40px var(--blue2));
+.logo {
+    width: 240px;
+    filter:
+        drop-shadow(0 0 8px #4cc9ff)
+        drop-shadow(0 0 25px #4cc9ff)
+        drop-shadow(0 0 50px #4cc9ff);
+    animation: subtleFlicker 4s infinite;
 }
 
-/* Title */
-h1{
-font-size:42px;
-letter-spacing:6px;
-margin:10px 0;
-text-shadow:0 0 10px var(--blue2),0 0 20px var(--blue2);
+/* subtle corporate flicker */
+@keyframes subtleFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.96; }
 }
 
-.subtitle{
-font-size:14px;
-letter-spacing:4px;
-opacity:.7;
-margin-bottom:40px;
+/* ===== TITLE ===== */
+h1 {
+    font-size: 48px;
+    margin: 25px 0 10px 0;
+    letter-spacing: 8px;
+    text-shadow:
+        0 0 8px #4cc9ff,
+        0 0 25px #4cc9ff;
 }
 
-/* Nav */
-nav a{
-display:inline-block;
-margin:10px 15px;
-color:var(--blue);
-text-decoration:none;
-font-size:18px;
-transition:.3s;
+.tagline {
+    letter-spacing: 5px;
+    font-size: 14px;
+    margin-bottom: 40px;
+    opacity: 0.8;
 }
 
-nav a:hover{
-color:var(--amber);
-text-shadow:0 0 8px var(--amber);
+/* ===== NAV ===== */
+nav a {
+    display: block;
+    margin: 18px 0;
+    color: #8fd8ff;
+    text-decoration: none;
+    font-size: 20px;
+    transition: 0.3s;
 }
 
-/* Sections */
-section{
-padding:100px 20px;
-border-top:1px solid rgba(107,212,255,.15);
-}
-
-h2{
-letter-spacing:3px;
-margin-bottom:20px;
-}
-
-p{
-max-width:700px;
-margin:0 auto 20px auto;
-line-height:1.6;
-}
-
-.button{
-display:inline-block;
-margin-top:15px;
-padding:10px 20px;
-border:1px solid var(--blue);
-color:var(--blue);
-text-decoration:none;
-transition:.3s;
-}
-
-.button:hover{
-border-color:var(--amber);
-color:var(--amber);
-box-shadow:0 0 10px var(--amber);
+nav a:hover {
+    text-shadow:
+        0 0 10px #4cc9ff,
+        0 0 20px #4cc9ff;
 }
 
 </style>
@@ -174,115 +142,37 @@ box-shadow:0 0 10px var(--amber);
 
 <body>
 
-<!-- Boot Screen -->
+<!-- BOOT SEQUENCE -->
 <div id="boot">
-<div class="bootText" id="bootText"></div>
+    <div class="boot-text">
+        INITIALIZING EGOCORE SYSTEM...<br><br>
+        MEDIA & SOCIAL ARCHITECTURE PROTOCOL LOADED.<br><br>
+        WELCOME TO EGO<span style="color:#4cc9ff;">CORP</span>.
+    </div>
 </div>
 
-<!-- Main App -->
-<div id="app">
+<!-- MAIN SITE -->
+<div class="content">
 
-<div class="container">
+    <div class="logo-container">
+        <img src="egocorp-logo.png" alt="Egocorp Logo" class="logo">
+    </div>
 
-<div class="logoWrap">
-<img src="./egocorp-logo.png" alt="Egocorp Logo">
-<img src="./egocorp-logo.png" class="logoGlow" alt="">
-</div>
+    <h1>EGO<span style="color:#4cc9ff;">CORP™</span></h1>
 
-<h1>EGOCORP™</h1>
-<div class="subtitle">MEDIA & SOCIAL ARCHITECTURE</div>
+    <div class="tagline">
+        MEDIA & SOCIAL ARCHITECTURE
+    </div>
 
-<nav>
-<a href="#about">About</a>
-<a href="#projects">Projects</a>
-<a href="#vision">Vision</a>
-<a href="#famefarm">Read Fame Farm</a>
-<a href="#terminal">Access Terminal</a>
-</nav>
-
-</div>
-
-<section id="about">
-<h2>ABOUT</h2>
-<p>
-Egocorp™ operates at the intersection of entertainment, narrative architecture, and engineered culture systems.
-</p>
-</section>
-
-<section id="projects">
-<h2>PROJECTS</h2>
-<p>
-• Project Virtu<br>
-• Virtu City<br>
-• Influence Infrastructure<br>
-• Immersive Media Platforms
-</p>
-</section>
-
-<section id="vision">
-<h2>VISION</h2>
-<p>
-Virtu City is a prototype for the next era of digital civilization.
-Where media, identity, and influence merge.
-</p>
-</section>
-
-<section id="famefarm">
-<h2>READ FAME FARM</h2>
-<a class="button" href="https://books.apple.com/us/book/fame-farm/id6743888201" target="_blank">
-Apple Books
-</a>
-</section>
-
-<section id="terminal">
-<h2>ACCESS TERMINAL</h2>
-<p>Employee authentication module initializing.</p>
-</section>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#vision">Vision</a>
+        <a href="#famefarm">Read Fame Farm</a>
+        <a href="#terminal">Access Terminal</a>
+    </nav>
 
 </div>
-
-<script>
-
-/* Boot Animation */
-const lines = [
-"EGOCORP BIOS v3.1.9",
-"Initializing Media & Social Architecture...",
-"Loading Virtu City Systems...",
-"Calibrating Phosphor Display...",
-"System Ready."
-];
-
-const bootText = document.getElementById("bootText");
-let i = 0;
-
-function typeLine(){
-if(i >= lines.length){
-setTimeout(()=>{
-document.getElementById("boot").style.display="none";
-document.getElementById("app").style.display="block";
-},600);
-return;
-}
-
-let line = lines[i];
-let j = 0;
-
-const interval = setInterval(()=>{
-bootText.innerHTML += line[j] || "";
-j++;
-
-if(j > line.length){
-clearInterval(interval);
-bootText.innerHTML += "<br>";
-i++;
-setTimeout(typeLine,200);
-}
-},20);
-}
-
-typeLine();
-
-</script>
 
 </body>
 </html>
