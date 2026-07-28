@@ -1,0 +1,36 @@
+CRT SAMPLE // EGOCORP PUBLIC PROVENANCE RECORD
+
+Product: CRT Sample
+Owner and publisher: Egocorp
+Release line: 1.0.2
+Record prepared: 2026-07-28
+Copyright: © 2026 Egocorp. All rights reserved.
+
+DESCRIPTION
+Audiovisual sample-chopping instrument with 32 monophonic chops,
+automatic BPM and key analysis, DAW tempo synchronization, MIDI and
+computer-keyboard performance, draggable markers, effects, video preview,
+and audiovisual export.
+
+PRIVATE SOURCE SNAPSHOT
+Algorithm: SHA-256
+Scope: 27 sorted files from SourceIPlug plus the primary build, ownership,
+license, readme, and third-party-notice documents.
+Manifest digest:
+54208bb9ce4dc6ce30d3f8c55c969443dd047b58a2b5e26502cedfc45af64652
+
+PRODUCT COVER
+Algorithm: SHA-256
+Digest:
+808733b2d02294b8dfbf9108ee66ff46bc80f06f39fcf305881053714f767d9a
+
+WINDOWS 1.0.2 VALIDATION PACKAGE
+Algorithm: SHA-256
+Digest:
+9e603ab86277420a4fda1bcb232d0c820669691b465455fd8dc68638a81ba7f6
+
+PURPOSE
+This public record timestamps identifiers for privately retained source and
+release artifacts without publishing or licensing that proprietary source.
+The Git history containing this file provides corroborating publication
+evidence; it is not a substitute for copyright or trademark registration.

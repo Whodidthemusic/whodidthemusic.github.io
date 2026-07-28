@@ -267,6 +267,110 @@
       box-shadow:0 0 18px rgba(255,179,71,.18);
     }
 
+
+    .productCard{
+      display:grid;
+      grid-template-columns:minmax(260px, .95fr) minmax(280px, 1.05fr);
+      gap:28px;
+      align-items:center;
+      margin-top:20px;
+      padding:18px;
+      border:1px solid rgba(134,214,255,.22);
+      border-radius:14px;
+      background:
+        linear-gradient(135deg, rgba(53,182,255,.08), transparent 48%),
+        rgba(0,0,0,.28);
+      box-shadow:
+        inset 0 0 32px rgba(53,182,255,.04),
+        0 0 28px rgba(53,182,255,.08);
+    }
+    .productArt{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,179,71,.30);
+      border-radius:10px;
+      background:#020405;
+      box-shadow:0 0 24px rgba(255,179,71,.10);
+    }
+    .productArt::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.04) 0,
+          rgba(255,255,255,.04) 1px,
+          transparent 1px,
+          transparent 4px
+        ),
+        radial-gradient(circle at 50% 38%, transparent 40%, rgba(0,0,0,.44) 100%);
+      opacity:.62;
+    }
+    .productArt img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .productCopy h3{
+      margin:0 0 8px;
+      color:var(--amber);
+      font-size:28px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      text-shadow:0 0 16px rgba(255,179,71,.20);
+    }
+    .productKicker{
+      margin-bottom:15px;
+      color:rgba(134,214,255,.72);
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .featureList{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:8px 14px;
+      margin:18px 0;
+      padding:0;
+      list-style:none;
+      color:rgba(134,214,255,.78);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .featureList li::before{
+      content:">";
+      margin-right:7px;
+      color:var(--amber);
+    }
+    .releaseStatus{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      margin-top:6px;
+      padding:10px 13px;
+      border:1px solid rgba(255,179,71,.36);
+      border-radius:9px;
+      color:var(--amber);
+      background:rgba(255,179,71,.06);
+      font-size:12px;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+    }
+    .releaseStatus::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--amber);
+      box-shadow:0 0 12px rgba(255,179,71,.75);
+    }
+    @media (max-width:760px){
+      .productCard{ grid-template-columns:1fr; }
+      .featureList{ grid-template-columns:1fr; }
+      .productCopy h3{ font-size:24px; }
+    }
     .footer{
       margin-top:60px;
       text-align:center;
@@ -330,6 +434,7 @@
       <div class="nav">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
+        <a href="#crt-sample">CRT Sample</a>
         <a href="#vision">Vision</a>
         <a href="#famefarm">Read Fame Farm</a>
         <a href="#terminal">Access Terminal</a>
@@ -357,9 +462,39 @@
           <div class="pill">Virtu City</div>
           <div class="pill">SMSx Influence Market</div>
           <div class="pill">Egocorp Terminal</div>
+          <div class="pill">CRT Sample</div>
         </div>
       </div>
 
+
+      <div class="section" id="crt-sample">
+        <h2>CRT Sample</h2>
+        <p>An audiovisual chop instrument that turns video into a playable, tempo-locked instrument.</p>
+
+        <div class="productCard">
+          <div class="productArt">
+            <img src="./assets/crt-sample-cover.webp" alt="CRT Sample audiovisual sampler product cover">
+          </div>
+
+          <div class="productCopy">
+            <div class="productKicker">Egocorp Audio Systems // AV Chop Instrument</div>
+            <h3>CRT Sample</h3>
+            <p>
+              Load a clip, find its best moments, and perform 32 monophonic audio/video chops from
+              MIDI, your computer keyboard, or the hardware-style pads.
+            </p>
+            <ul class="featureList">
+              <li>Automatic BPM + key detection</li>
+              <li>DAW tempo lock</li>
+              <li>32 monophonic chops</li>
+              <li>Waveform zoom + marker editing</li>
+              <li>Chorus, lo-fi, bitcrush + reverb</li>
+              <li>VST3 + standalone</li>
+            </ul>
+            <div class="releaseStatus">V1 private beta // installers incoming</div>
+          </div>
+        </div>
+      </div>
       <div class="section" id="vision">
         <h2>Vision</h2>
         <p>
@@ -408,6 +543,7 @@
     "Mounting Influence Layer: [OK]",
     "Loading Virtu City Protocols: [OK]",
     "Compiling Narrative Engine: [OK]",
+    "Mounting CRT Sample Instrument: [OK]",
     "Syncing Audience Feedback Loop: [OK]",
     "Calibrating Phosphor Display: [OK]",
     "Routing Social Signals: [OK]",
