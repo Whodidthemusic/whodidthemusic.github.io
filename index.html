@@ -266,6 +266,21 @@
       border-color:rgba(255,179,71,.55);
       box-shadow:0 0 18px rgba(255,179,71,.18);
     }
+    .productActions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .btnPrimary{
+      color:#bfe9ff;
+      border-color:rgba(134,214,255,.58);
+      background:rgba(134,214,255,.10);
+      box-shadow:inset 0 0 16px rgba(134,214,255,.06), 0 0 16px rgba(134,214,255,.08);
+    }
+    .btnPrimary:hover{
+      background:rgba(255,179,71,.08);
+    }
     .supportNote{
       margin-top:9px;
       color:rgba(134,214,255,.58);
@@ -498,15 +513,22 @@
               <li>Chorus, lo-fi, bitcrush + reverb</li>
               <li>VST3 + standalone</li>
             </ul>
-            <div class="releaseStatus">V1 development // Windows 10/11</div>
-            <a class="btn"
-               href="https://cash.app/$egocorp"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Support CRT Sample development through Cash App">
-              Support CRT Sample via Cash App
-            </a>
-            <div class="supportNote">$egocorp // optional support</div>
+            <div class="releaseStatus">V1.1.0 customer trial // Windows 10/11</div>
+            <div class="productActions">
+              <a class="btn btnPrimary"
+                 href="https://github.com/Whodidthemusic/whodidthemusic.github.io/releases/download/crt-sample-v1.1.0/CRT-Sample-1.1.0-Customer-Windows-x64-Setup.exe"
+                 aria-label="Download the CRT Sample 1.1.0 30-day Customer Trial for Windows">
+                Download 30-Day Trial
+              </a>
+              <a class="btn"
+                 href="https://cash.app/$egocorp"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Support CRT Sample development through Cash App">
+                Support via Cash App
+              </a>
+            </div>
+            <div class="supportNote">Windows x64 // VST3 + standalone // $egocorp optional support</div>
           </div>
         </div>
       </div>
