@@ -291,6 +291,14 @@
     .btnPrimary:hover{
       background:rgba(255,179,71,.08);
     }
+    .btnDisabled{
+      cursor:not-allowed;
+      opacity:.58;
+      color:rgba(134,214,255,.62);
+      border-color:rgba(134,214,255,.24);
+      background:rgba(134,214,255,.04);
+      box-shadow:none;
+    }
     .supportNote{
       margin-top:9px;
       color:rgba(134,214,255,.58);
@@ -531,13 +539,11 @@
               <li>Chorus, lo-fi, bitcrush + reverb</li>
               <li>Windows VST3 plugin</li>
             </ul>
-            <div class="releaseStatus">V1.1.0 customer trial // Windows 10/11</div>
+            <div class="releaseStatus">Final customer build in certification // Windows 10/11</div>
             <div class="productActions">
-              <a class="btn btnPrimary"
-                 href="https://github.com/Whodidthemusic/whodidthemusic.github.io/releases/download/crt-sample-v1.1.0/CRT-Sample-1.1.0-Customer-Windows-x64-Setup.exe"
-                 aria-label="Download the CRT Sample 1.1.0 30-day Customer Trial for Windows">
-                Download 30-Day Trial
-              </a>
+              <span class="btn btnDisabled" aria-disabled="true">
+                Customer Download Updating
+              </span>
               <a class="btn"
                  href="https://cash.app/$egocorp"
                  target="_blank"
