@@ -45,11 +45,10 @@ test('Auris uses her handle and no last name on public SMSX surfaces',()=>{
 });
 test('exchange tape separates public brand markets from simulated creator signals',()=>{
   const tape=exchangeTape(),page=shell(freshState(),{view:'discover',filter:'All',search:''});
-  for(const symbol of ['NASDAQ:META','NASDAQ:GOOGL','NYSE:SNAP','NASDAQ:AMZN','NYSE:NKE'])assert.match(tape,new RegExp(symbol));
   assert.match(tape,/BRAND MARKETS/);assert.match(tape,/LIVE \/ DELAYED/);
   assert.match(tape,/CONNECTING TO MARKET FEED/);
   assert.match(tape,/CREATOR SIGNAL/);assert.match(tape,/SIMULATED/);assert.match(tape,/@PlanetAuris/);
-  assert.equal((page.match(/<tv-ticker-tape/g)||[]).length,1);
+  assert.equal((page.match(/class="tradingview-shell"/g)||[]).length,1);
 });
 test('NanoQ DNA revival market is playable and settles inside the demo',()=>{
   const event=events.find(e=>e.id==='nano-dna'),html=content(freshState(),{view:'events',filter:'All',search:''});

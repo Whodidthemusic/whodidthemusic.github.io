@@ -44,10 +44,11 @@ test('SMSX follows CRT Sample directly and navigation matches the page order', (
   assert.ok(html.includes('src="./smsx/?embed=1"'));
 });
 
-test('SMSX loads the official TradingView ticker-tape component once',()=>{
+test('SMSX loads the official TradingView ticker-tape embed once',()=>{
   const app=readFileSync(new URL('../smsx/index.html',import.meta.url),'utf8');
-  assert.equal((app.match(/tv-ticker-tape\.js/g)||[]).length,1);
-  assert.ok(app.includes('https://www.tradingview-widget.com/w/en/tv-ticker-tape.js'));
+  assert.equal((app.match(/embed-widget-ticker-tape\.js/g)||[]).length,1);
+  assert.ok(app.includes('https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'));
+  for(const symbol of ['NASDAQ:META','NASDAQ:GOOGL','NYSE:SNAP','NASDAQ:AMZN','NYSE:NKE'])assert.ok(app.includes(symbol));
 });
 
 test('navigation has real targets and inline scripts still parse', () => {

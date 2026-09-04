@@ -7,11 +7,16 @@
   <meta name="description" content="Explore the Social Media Stock Xchange. Trade culture, back the next trend, and find your place in Virtu City in this interactive Fame Farm demo.">
   <title>SMSX — The Culture Exchange</title>
   <link rel="stylesheet" href="./styles.css">
-  <script type="module" src="https://www.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
   <script>if(new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');</script>
 </head>
 <body>
   <div id="app"></div>
+  <div id="public-market-widget" class="tradingview-widget-container" hidden>
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {"symbols":[{"proName":"NASDAQ:META","title":"Meta"},{"proName":"NASDAQ:GOOGL","title":"Google"},{"proName":"NYSE:SNAP","title":"Snap"},{"proName":"NASDAQ:PINS","title":"Pinterest"},{"proName":"NASDAQ:AMZN","title":"Amazon"},{"proName":"NASDAQ:AAPL","title":"Apple"},{"proName":"NASDAQ:NFLX","title":"Netflix"},{"proName":"NYSE:DIS","title":"Disney"},{"proName":"NYSE:NKE","title":"Nike"},{"proName":"NASDAQ:NVDA","title":"Nvidia"}],"showSymbolLogo":true,"isTransparent":true,"displayMode":"adaptive","colorTheme":"light","locale":"en"}
+    </script>
+  </div>
   <dialog id="action-dialog" aria-labelledby="dialog-title"></dialog>
   <div id="toast" role="status" aria-live="polite"></div>
   <noscript>This interactive SMSX demo needs JavaScript enabled.</noscript>
