@@ -480,6 +480,16 @@
       background:rgba(0,0,0,.25);
       margin:0 auto 18px;
     }
+    /* SMSX is a self-contained, bright interactive product surface. */
+    .screen{animation:none}
+    #smsx{position:relative;z-index:70;background:var(--bg);padding-top:24px;scroll-margin-top:20px}
+    .smsxIntro{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:20px;text-align:left}
+    .smsxIntro h2{margin:0 0 7px}
+    .smsxIntro p{margin:0;font-size:14px}
+    .smsxExpand{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;color:var(--blue);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:13px}
+    #smsx-frame{display:block;width:100%;height:1100px;border:0;border-radius:14px;background:white;color-scheme:light}
+    .smsxLink{color:var(--blue)}
+    @media(max-width:600px){.smsxIntro{align-items:flex-start;flex-direction:column}.smsxExpand{font-size:12px}#smsx-frame{border-radius:10px}}
   </style>
 </head>
 
@@ -521,6 +531,7 @@
       <div class="nav">
         <a href="#about">Company</a>
         <a href="#projects">Our Businesses</a>
+        <a href="#smsx">SMSX</a>
         <a href="#crt-sample">CRT Sample</a>
         <a href="#vision">Our Approach</a>
         <a href="#famefarm">Fame Farm</a>
@@ -565,6 +576,7 @@
           <dd>
             The business of online influence: how creators build an audience and turn attention
             into income. SMSx focuses on the commercial side of media and entertainment.
+            <a class="smsxLink" href="#smsx">Explore the interactive exchange ↓</a>
           </dd>
           <dt>Research &amp; Development</dt>
           <dd>
@@ -574,6 +586,17 @@
         </dl>
       </div>
 
+
+      <div class="section" id="smsx">
+        <div class="smsxIntro">
+          <div>
+            <h2>SMSX</h2>
+            <p>The culture exchange. Explore the interactive Fame Farm experience.</p>
+          </div>
+          <a class="smsxExpand" href="./smsx/" target="_blank" rel="noopener">Open full app ↗</a>
+        </div>
+        <iframe id="smsx-frame" src="./smsx/?embed=1" title="SMSX interactive culture exchange demo" loading="lazy" allow="fullscreen"></iframe>
+      </div>
 
       <div class="section" id="crt-sample">
         <h2>CRT Sample</h2>
@@ -768,5 +791,6 @@
 
   runBoot();
 </script>
+<script type="module" src="./smsx/embed.mjs"></script>
 </body>
 </html>
