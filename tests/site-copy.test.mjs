@@ -6,7 +6,7 @@ import { Script } from 'node:vm';
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 test('corporate sections contain the new copy, not old placeholders', () => {
-  for (const text of ['The Company', 'Our Businesses', 'Our smart-city program, centered on Virtu City',
+  for (const text of ['The Company', 'Our Businesses', 'Technology and support for day-to-day operations',
     'Our Approach', 'Employee accounts, workplace records', 'Opening public information services']) {
     assert.ok(html.includes(text), text);
   }
@@ -14,6 +14,10 @@ test('corporate sections contain the new copy, not old placeholders', () => {
     'Mounting Influence Layer', 'gamified, measurable, and monetized']) {
     assert.ok(!html.includes(text), text);
   }
+});
+
+test('public site does not disclose the city or project name', () => {
+  assert.doesNotMatch(html, /virtu\s*city|project\s+virtu|smart-city/i);
 });
 
 test('CRT Sample emphasizes web links, local/external files and in-DAW chopping', () => {
