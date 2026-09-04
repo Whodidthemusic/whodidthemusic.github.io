@@ -1,8 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshState,transact,portfolioValue,loadState} from '../smsx/engine.mjs';
-import {assets,pricesAt} from '../smsx/data.mjs';
-import {avatar,content,assetDialog} from '../smsx/views.mjs';
+import {assets,properties,pricesAt} from '../smsx/data.mjs';
+import {avatar,content,assetDialog,propertyDialog,propertyImage} from '../smsx/views.mjs';
+import {existsSync,readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+
+test('every lot has distinct artwork shared by its card and purchase dialog',()=>{
+  const state=freshState(),html=content(state,{view:'city',filter:'All',search:''}),hashes=[];
+  for(const p of properties){
+    const image=propertyImage(p),file=new URL('../smsx/assets/lots/'+p.id+'.png',import.meta.url);
+    assert.ok(html.includes(image),p.id+' card');assert.ok(propertyDialog(state,p).includes(image),p.id+' dialog');
+    assert.ok(existsSync(file),p.id+' image file');
+    hashes.push(createHash('sha256').update(readFileSync(file)).digest('hex'));
+  }
+  assert.equal(new Set(hashes).size,6);
+});
 
 test('renamed ticker preserves saved holdings, watchlist and trade history',()=>{
   const old={...freshState(),holdings:{KWO:10},watch:['KWO'],trades:[{asset:'KWO',target:'KWO',quantity:10,total:31.1,day:0,type:'buy'}]};

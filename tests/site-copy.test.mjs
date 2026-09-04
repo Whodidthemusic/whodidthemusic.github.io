@@ -16,8 +16,10 @@ test('corporate sections contain the new copy, not old placeholders', () => {
   }
 });
 
-test('public site does not disclose the city or project name', () => {
-  assert.doesNotMatch(html, /virtu\s*city|project\s+virtu|smart-city/i);
+test('About explains Egocorp and approved Project Virtu announcement while preserving Fame Farm', () => {
+  const about=html.match(/id="about">([\s\S]*?)id="projects"/)[1];
+  for(const text of ['automate influence','social solutions','cognitive data restoration','branding',
+    'one streamlined experience','Project Virtu is breaking ground','northern Nevada','pinnacle of human innovation'])assert.ok(about.includes(text),text);
   assert.ok(html.includes('<h2>Fame Farm</h2>'));
   assert.ok(html.includes('https://books.apple.com/us/book/fame-farm/id6743888201'));
 });
