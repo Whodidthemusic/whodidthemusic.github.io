@@ -1,7 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshState,transact,portfolioValue,loadState} from '../smsx/engine.mjs';
-import {pricesAt} from '../smsx/data.mjs';
+import {assets,pricesAt} from '../smsx/data.mjs';
+import {avatar,content,assetDialog} from '../smsx/views.mjs';
+
+test('renamed ticker preserves saved holdings, watchlist and trade history',()=>{
+  const old={...freshState(),holdings:{KWO:10},watch:['KWO'],trades:[{asset:'KWO',target:'KWO',quantity:10,total:31.1,day:0,type:'buy'}]};
+  const s=loadState({getItem:()=>JSON.stringify(old)});
+  assert.deepEqual(s.holdings,{TEK:10});assert.deepEqual(s.watch,['TEK']);
+  assert.equal(s.trades[0].asset,'TEK');assert.equal(s.trades[0].target,'TEK');
+  assert.equal(portfolioValue(s),25031.1);
+  assert.equal(transact(s,{type:'sell',asset:'TEK',quantity:10}).cash,25031.1);
+  assert.deepEqual(loadState({getItem:()=>JSON.stringify(s)}),s);
+});
+
+test('public SMSX surfaces omit the removed name and use the supplied Auris portrait',()=>{
+  const state=freshState(),auris=assets.find(a=>a.id==='AURA');
+  const pages=['discover','markets','events','portfolio','city','challenges'].map(view=>content(state,{view,filter:'All',search:''}));
+  const html=pages.join('')+assets.map(a=>assetDialog(state,a)).join('');
+  assert.doesNotMatch(html,/kw[oō]/i);
+  assert.match(avatar(auris),/assets\/auris\.jpg/);
+  assert.match(pages[2],/class="event-portrait" src="\.\/assets\/auris\.jpg"/);
+  assert.match(assetDialog(state,auris),/assets\/auris\.jpg/);
+});
 test('buy and sell conserve value and reject invalid or unaffordable trades',()=>{
   const opening=freshState(),buy=transact(opening,{type:'buy',asset:'AURA',quantity:10});
   assert.equal(opening.cash,25000);assert.equal(buy.cash,24871.6);assert.equal(buy.holdings.AURA,10);assert.equal(portfolioValue(buy),25000);

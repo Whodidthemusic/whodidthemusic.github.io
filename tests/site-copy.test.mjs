@@ -34,6 +34,14 @@ test('CRT Sample emphasizes web links, local/external files and in-DAW chopping'
   assert.ok(section.includes('CRT-Sample-1.1.0-Open-V1-Beta-Fully-Unlocked-Windows-x64-Setup.exe'));
 });
 
+test('SMSX follows CRT Sample directly and navigation matches the page order', () => {
+  const sections=[...html.matchAll(/class="section" id="([^"]+)"/g)].map(m=>m[1]);
+  assert.equal(sections[sections.indexOf('crt-sample')+1],'smsx');
+  assert.ok(html.indexOf('href="#crt-sample"')<html.indexOf('href="#smsx"'));
+  assert.equal([...html.matchAll(/id="smsx-frame"/g)].length,1);
+  assert.ok(html.includes('src="./smsx/?embed=1"'));
+});
+
 test('navigation has real targets and inline scripts still parse', () => {
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length);

@@ -64,6 +64,18 @@ export function loadState(storage){
   try{
     const s=JSON.parse(storage.getItem('egocorp-smsx-demo-v1'));
     if(!s||s.version!==1||!Number.isFinite(s.cash)||s.cash<0||s.cash>1e9||!Number.isInteger(s.day)||s.day<0||s.day>6)return freshState();
+    // Preserve existing demo portfolios when a market ticker is renamed.
+    const oldTicker='KWO',newTicker='TEK';
+    if(s.holdings&&Object.hasOwn(s.holdings,oldTicker)){
+      const oldQuantity=s.holdings[oldTicker],newQuantity=s.holdings[newTicker]??0;
+      if(!Number.isInteger(oldQuantity)||oldQuantity<0||!Number.isInteger(newQuantity)||newQuantity<0)return freshState();
+      s.holdings[newTicker]=oldQuantity+newQuantity;delete s.holdings[oldTicker];
+    }
+    if(Array.isArray(s.watch))s.watch=[...new Set(s.watch.map(id=>id===oldTicker?newTicker:id))];
+    if(Array.isArray(s.trades))for(const trade of s.trades){
+      if(trade.asset===oldTicker)trade.asset=newTicker;
+      if(trade.target===oldTicker)trade.target=newTicker;
+    }
     const validIds=new Set(assets.map(a=>a.id));
     if(!s.holdings||Object.entries(s.holdings).some(([id,n])=>!validIds.has(id)||!Number.isInteger(n)||n<0||n>1e6))return freshState();
     for(const key of ['watch','bets','property','joined','claimed','campaigns','trades','history'])if(!Array.isArray(s[key])||s[key].length>10000)return freshState();
