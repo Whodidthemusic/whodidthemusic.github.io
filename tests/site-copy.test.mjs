@@ -48,6 +48,7 @@ test('SMSX loads the official TradingView ticker-tape embed once',()=>{
   const app=readFileSync(new URL('../smsx/index.html',import.meta.url),'utf8');
   assert.equal((app.match(/embed-widget-ticker-tape\.js/g)||[]).length,1);
   assert.ok(app.includes('https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'));
+  assert.doesNotMatch(app,/id="public-market-widget"[^>]*hidden/);
   for(const symbol of ['NASDAQ:META','NASDAQ:GOOGL','NYSE:SNAP','NASDAQ:AMZN','NYSE:NKE'])assert.ok(app.includes(symbol));
 });
 
