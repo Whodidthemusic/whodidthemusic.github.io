@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshState,transact,portfolioValue,loadState} from '../smsx/engine.mjs';
-import {assets,properties,pricesAt} from '../smsx/data.mjs';
-import {avatar,content,assetDialog,propertyDialog,propertyImage} from '../smsx/views.mjs';
+import {assets,events,properties,pricesAt} from '../smsx/data.mjs';
+import {avatar,content,assetDialog,propertyDialog,propertyImage,exchangeTape,shell} from '../smsx/views.mjs';
 import {existsSync,readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 
@@ -42,6 +42,21 @@ test('Auris uses her handle and no last name on public SMSX surfaces',()=>{
   const auris=assets.find(a=>a.id==='AURA'),html=pages+assetDialog(state,auris);
   assert.equal(auris.name,'Auris');assert.equal(auris.handle,'@PlanetAuris');
   assert.match(html,/@PlanetAuris/);assert.doesNotMatch(html,/Auris Veil/);
+});
+test('exchange tape separates public brand markets from simulated creator signals',()=>{
+  const tape=exchangeTape(),page=shell(freshState(),{view:'discover',filter:'All',search:''});
+  for(const symbol of ['NASDAQ:META','NASDAQ:GOOGL','NYSE:SNAP','NASDAQ:AMZN','NYSE:NKE'])assert.match(tape,new RegExp(symbol));
+  assert.match(tape,/BRAND MARKETS/);assert.match(tape,/LIVE \/ DELAYED/);
+  assert.match(tape,/CONNECTING TO MARKET FEED/);
+  assert.match(tape,/CREATOR SIGNAL/);assert.match(tape,/SIMULATED/);assert.match(tape,/@PlanetAuris/);
+  assert.equal((page.match(/<tv-ticker-tape/g)||[]).length,1);
+});
+test('NanoQ DNA revival market is playable and settles inside the demo',()=>{
+  const event=events.find(e=>e.id==='nano-dna'),html=content(freshState(),{view:'events',filter:'All',search:''});
+  assert.equal(event.asset,'NANOQ');assert.match(event.title,/extinct animal from DNA/i);assert.match(html,/NanoQ DNA Lab/);
+  let state=transact(freshState(),{type:'bet',event:event.id,side:'yes',stake:100});
+  while(state.day<event.closes)state=transact(state,{type:'advance'});
+  assert.equal(state.bets.find(b=>b.event===event.id).status,'won');
 });
 test('buy and sell conserve value and reject invalid or unaffordable trades',()=>{
   const opening=freshState(),buy=transact(opening,{type:'buy',asset:'AURA',quantity:10});

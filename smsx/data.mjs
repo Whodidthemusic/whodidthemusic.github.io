@@ -1,7 +1,7 @@
 export const assets = [
   {id:'AURA',name:'Auris',handle:'@PlanetAuris',category:'Influencers',price:12.84,change:8.24,avatar:0,volume:'842K',audience:'2.8M',attention:92,world:'Fame Farm',description:'The face of Valleywood. Fashion, identity, and a fanbase that moves with every new look.'},
   {id:'CLIME',name:'ClimeCore',category:'Trends',price:8.63,change:5.61,avatar:1,volume:'615K',audience:'8.6M',attention:96,world:'Fame Farm',description:'Virtu City’s most contagious challenge. Every clip adds to the conversation.'},
-  {id:'NANOQ',name:'NanoQ',category:'Brands',price:5.27,change:-2.31,avatar:2,volume:'293K',audience:'940K',attention:68,world:'Fame Farm',description:'Personal robotics with a very public following. Product launches meet culture.'},
+  {id:'NANOQ',name:'NanoQ',category:'Brands',price:5.27,change:-2.31,avatar:2,volume:'293K',audience:'940K',attention:68,world:'Fame Farm',description:'Personal robotics and speculative DNA restoration with a very public following. Product launches meet culture.'},
   {id:'CHRM',name:'Chrome Label',category:'Fashion',price:15.92,change:3.74,avatar:3,volume:'410K',audience:'1.4M',attention:86,world:'Fame Farm',description:'Reflective streetwear, limited drops, and front-row access to the Chrome Carpet.'},
   {id:'TEK',name:'Tekspiracy',category:'Influencers',price:3.11,change:-1.08,avatar:4,volume:'128K',audience:'620K',attention:77,world:'Fame Farm',description:'An underground stream for an audience that looks beneath the surface.'},
   {id:'GALA',name:'Meta Gala',category:'Events',price:24.60,change:6.82,avatar:3,volume:'528K',audience:'3.1M',attention:94,world:'Fame Farm',description:'The Museum of Vision’s biggest night: fashion, art, culture, and the unexpected.'},
@@ -16,6 +16,7 @@ export const events = [
   {id:'clime10',title:'Will #ClimeCore hit 10M?',category:'Challenges',yes:68,asset:'CLIME',closes:3,outcome:true,detail:'Total challenge views reach 10 million by the end of demo day 3.',image:'clime'},
   {id:'gala',title:'Will chrome own the Meta Gala?',category:'Fashion',yes:74,asset:'GALA',closes:4,outcome:true,detail:'Chrome looks appear in more than half of the Gala’s top 20 demo posts.',image:'gala'},
   {id:'nano',title:'Will NanoQ sell out its first drop?',category:'Brands',yes:42,asset:'NANOQ',closes:2,outcome:false,detail:'The NanoQ companion drop sells all 5,000 units by demo day 2.',image:'nano'},
+  {id:'nano-dna',title:'Will NanoQ revive an extinct animal from DNA?',category:'NanoQ DNA Lab',yes:36,asset:'NANOQ',closes:6,outcome:true,detail:'NanoQ announces a living specimen recreated from preserved extinct-animal DNA by the end of demo day 6.',image:'nano-dna'},
   {id:'auris',title:'Will Auris reach 3M followers?',category:'Influencers',yes:81,asset:'AURA',closes:5,outcome:true,detail:'Auris crosses 3 million followers by the end of demo day 5.',image:'auris'},
   {id:'street',title:'Will archive fashion take the lead?',category:'Reality mirror',yes:57,asset:'STRT',closes:3,outcome:false,detail:'Archive-fashion attention outpaces new-drop attention in our simulated culture index.',image:'shoes'},
   {id:'neon',title:'Will Neon FM discover a breakout?',category:'Music',yes:63,asset:'NEON',closes:4,outcome:true,detail:'An independent release reaches the city’s top 10 before demo day 4 closes.',image:'music'}

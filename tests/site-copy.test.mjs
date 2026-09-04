@@ -44,6 +44,12 @@ test('SMSX follows CRT Sample directly and navigation matches the page order', (
   assert.ok(html.includes('src="./smsx/?embed=1"'));
 });
 
+test('SMSX loads the official TradingView ticker-tape component once',()=>{
+  const app=readFileSync(new URL('../smsx/index.html',import.meta.url),'utf8');
+  assert.equal((app.match(/tv-ticker-tape\.js/g)||[]).length,1);
+  assert.ok(app.includes('https://www.tradingview-widget.com/w/en/tv-ticker-tape.js'));
+});
+
 test('navigation has real targets and inline scripts still parse', () => {
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length);
