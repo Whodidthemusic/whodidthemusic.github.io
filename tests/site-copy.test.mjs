@@ -18,11 +18,14 @@ test('corporate sections contain the new copy, not old placeholders', () => {
 
 test('public site does not disclose the city or project name', () => {
   assert.doesNotMatch(html, /virtu\s*city|project\s+virtu|smart-city/i);
+  assert.ok(html.includes('<h2>Fame Farm</h2>'));
+  assert.ok(html.includes('https://books.apple.com/us/book/fame-farm/id6743888201'));
 });
 
 test('CRT Sample emphasizes web links, local/external files and in-DAW chopping', () => {
   const section = html.match(/id="crt-sample">([\s\S]*?)id="vision"/)[1];
-  for (const text of ['Copy and paste a YouTube or Instagram link', 'from your computer or external drives',
+  for (const text of ['Modern crate digging. Built for your DAW.', 'Crate digging has moved beyond the record store.',
+    'Copy and paste a YouTube or Instagram link', 'from your computer or external drives',
     'directly inside your DAW', 'Paste YouTube + Instagram links', 'Load local + external drive media']) {
     assert.ok(section.includes(text), text);
   }
