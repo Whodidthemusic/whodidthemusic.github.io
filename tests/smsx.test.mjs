@@ -36,6 +36,13 @@ test('public SMSX surfaces omit the removed name and use the supplied Auris port
   assert.match(pages[2],/class="event-portrait" src="\.\/assets\/auris\.jpg"/);
   assert.match(assetDialog(state,auris),/assets\/auris\.jpg/);
 });
+
+test('Auris uses her handle and no last name on public SMSX surfaces',()=>{
+  const state=freshState(),pages=['discover','markets','events','portfolio'].map(view=>content(state,{view,filter:'All',search:''})).join('');
+  const auris=assets.find(a=>a.id==='AURA'),html=pages+assetDialog(state,auris);
+  assert.equal(auris.name,'Auris');assert.equal(auris.handle,'@PlanetAuris');
+  assert.match(html,/@PlanetAuris/);assert.doesNotMatch(html,/Auris Veil/);
+});
 test('buy and sell conserve value and reject invalid or unaffordable trades',()=>{
   const opening=freshState(),buy=transact(opening,{type:'buy',asset:'AURA',quantity:10});
   assert.equal(opening.cash,25000);assert.equal(buy.cash,24871.6);assert.equal(buy.holdings.AURA,10);assert.equal(portfolioValue(buy),25000);
