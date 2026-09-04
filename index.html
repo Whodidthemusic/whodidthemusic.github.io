@@ -345,6 +345,38 @@
       width:100%;
       height:auto;
     }
+    .downloadCounter{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      margin-top:14px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:rgba(53,182,255,.05);
+    }
+    .downloadCounterValue{
+      color:var(--amber);
+      font-size:2.25rem;
+      font-weight:bold;
+      font-variant-numeric:tabular-nums;
+      line-height:1;
+      text-shadow:0 0 16px rgba(255,179,71,.20);
+    }
+    .downloadCounterLabel{
+      display:block;
+      font-size:.875rem;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .downloadCounterStatus{
+      display:block;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:.75rem;
+      line-height:1.4;
+    }
     .productCopy h3{
       margin:0 0 8px;
       color:var(--amber);
@@ -504,6 +536,7 @@
         <p>An audiovisual chop instrument that turns video into a playable, tempo-locked instrument.</p>
 
         <div class="productCard">
+          <div class="productVisual">
           <div class="productArt">
             <picture>
               <source srcset="./assets/crt-sample-cover.webp" type="image/webp">
@@ -514,6 +547,14 @@
                    decoding="async"
                    alt="Official CRT Sample by Egocorp Industries Open V1 Beta artwork">
             </picture>
+          </div>
+          <div class="downloadCounter" title="Includes Egocorp's starting total of 243, plus new recorded beta downloads. Downloads are not unique people.">
+            <span class="downloadCounterValue" id="crt-download-count" aria-live="polite" aria-atomic="true" aria-label="243 downloads">243</span>
+            <div>
+              <span class="downloadCounterLabel">Downloads</span>
+              <span class="downloadCounterStatus" id="crt-download-status">Starting total</span>
+            </div>
+          </div>
           </div>
 
           <div class="productCopy">
@@ -587,6 +628,7 @@
 
 </div>
 
+<script type="module" src="./assets/download-counter.mjs"></script>
 <script>
   const logEl = document.getElementById("log");
   const bar = document.getElementById("bar");
