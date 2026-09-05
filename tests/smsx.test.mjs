@@ -50,6 +50,9 @@ test('exchange tape separates public brand markets from simulated creator signal
   assert.match(tape,/CREATOR SIGNAL/);assert.match(tape,/SIMULATED/);assert.match(tape,/@PlanetAuris/);
   assert.equal((page.match(/class="tradingview-shell"/g)||[]).length,1);
 });
+test('SMSX logo carries the full Social Media Stock Xchange name',()=>{
+  assert.match(shell(freshState(),{view:'discover',filter:'All',search:''}),/Social Media<br>Stock Xchange/);
+});
 test('NanoQ DNA revival market is playable and settles inside the demo',()=>{
   const event=events.find(e=>e.id==='nano-dna'),html=content(freshState(),{view:'events',filter:'All',search:''});
   assert.equal(event.asset,'NANOQ');assert.match(event.title,/extinct animal from DNA/i);assert.match(html,/NanoQ DNA Lab/);

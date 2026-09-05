@@ -11,11 +11,13 @@
 </head>
 <body>
   <div id="app"></div>
-  <div id="public-market-widget" class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
-    {"symbols":[{"proName":"NASDAQ:META","title":"Meta"},{"proName":"NASDAQ:GOOGL","title":"Google"},{"proName":"NYSE:SNAP","title":"Snap"},{"proName":"NASDAQ:PINS","title":"Pinterest"},{"proName":"NASDAQ:AMZN","title":"Amazon"},{"proName":"NASDAQ:AAPL","title":"Apple"},{"proName":"NASDAQ:NFLX","title":"Netflix"},{"proName":"NYSE:DIS","title":"Disney"},{"proName":"NYSE:NKE","title":"Nike"},{"proName":"NASDAQ:NVDA","title":"Nvidia"}],"showSymbolLogo":true,"isTransparent":true,"displayMode":"adaptive","colorTheme":"light","locale":"en"}
-    </script>
+  <div id="public-market-widget-host">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
+      {"symbols":[{"proName":"NASDAQ:META","title":"Meta"},{"proName":"NASDAQ:GOOGL","title":"Google"},{"proName":"NYSE:SNAP","title":"Snap"},{"proName":"NASDAQ:PINS","title":"Pinterest"},{"proName":"NASDAQ:AMZN","title":"Amazon"},{"proName":"NASDAQ:AAPL","title":"Apple"},{"proName":"NASDAQ:NFLX","title":"Netflix"},{"proName":"NYSE:DIS","title":"Disney"},{"proName":"NYSE:NKE","title":"Nike"},{"proName":"NASDAQ:NVDA","title":"Nvidia"}],"showSymbolLogo":true,"isTransparent":true,"displayMode":"adaptive","colorTheme":"light","locale":"en"}
+      </script>
+    </div>
   </div>
   <dialog id="action-dialog" aria-labelledby="dialog-title"></dialog>
   <div id="toast" role="status" aria-live="polite"></div>

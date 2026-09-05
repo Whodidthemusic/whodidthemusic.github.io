@@ -2,7 +2,7 @@ import {assets,events,properties,placements,pricesAt} from './data.mjs';
 import {freshState,loadState,transact} from './engine.mjs';
 import {shell,marketRows,assetDialog,betDialog,propertyDialog,adDialog,demoDialog,number,money,navItems} from './views.mjs';
 import {icon} from './icons.mjs';
-const root=document.querySelector('#app'),dialog=document.querySelector('#action-dialog'),toast=document.querySelector('#toast'),publicMarketWidget=document.querySelector('#public-market-widget');
+const root=document.querySelector('#app'),dialog=document.querySelector('#action-dialog'),toast=document.querySelector('#toast'),publicMarketWidget=document.querySelector('#public-market-widget-host');
 let storage;try{storage=localStorage;}catch{}
 let state=loadState(storage),ui={view:'discover',filter:'All',search:''},modal=null,toastTimer;
 function save(){try{storage?.setItem('egocorp-smsx-demo-v1',JSON.stringify(state));}catch{}}
